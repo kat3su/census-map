@@ -69,9 +69,7 @@ export class AppComponent implements OnInit {
     this.colourIndicators.forEach(colourIndicator => {
       fusionLayerOptions.styles.push(this.getFusionTableStyle('people', colourIndicator));
     });
-
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
-
     // this.fusionLayer.setOptions({})
     // Can also do 2 layer
     /*
