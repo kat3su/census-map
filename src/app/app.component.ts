@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
    * Initialisation
    */
   ngOnInit(): void {
-
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -25, lng: 133},
       zoom: 4
@@ -69,9 +68,7 @@ export class AppComponent implements OnInit {
     this.colourIndicators.forEach(colourIndicator => {
       fusionLayerOptions.styles.push(this.getFusionTableStyle('people', colourIndicator));
     });
-
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
-
     // this.fusionLayer.setOptions({})
     // Can also do 2 layer
     /*
