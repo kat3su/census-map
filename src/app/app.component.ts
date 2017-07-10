@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
    * Initialisation
    */
   ngOnInit(): void {
-
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -25, lng: 133},
       zoom: 4
