@@ -1,3 +1,21 @@
-<h1>
-  {{title}}
-</h1>
+<!-- Select -->
+<div class="form-group" style="position: absolute; top: 1rem; right: 1rem; width: 30%;">
+  <select class="form-select" placeholder="Display map by population">
+    <option>Display map by population</option>
+  </select>
+</div>
+<div class="form-group" style="position: absolute; top: 1rem; left: 1rem; width: 50%">
+  <!-- Search Bar -->
+  <input class="form-input" placeholder="Suburb Search" style="margin-left: 11rem;"/>
+  <!-- Colour Indicators -->
+  <ul>
+    <li *ngFor="let colourIndicator of colourIndicators.reverse()">
+      <span class="indicator-box" [style.background]="colourIndicator.color"></span>
+      <span>{{colourIndicator.display}}</span>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Map -->
+<div id="map"></div>
