@@ -72,8 +72,6 @@ export class AppComponent implements OnInit {
 
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
 
-
-
     // this.fusionLayer.setOptions({})
     // Can also do 2 layer
     /*
