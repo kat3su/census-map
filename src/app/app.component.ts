@@ -13,6 +13,7 @@ interface FusionTableStyle {
 })
 export class AppComponent implements OnInit {
   map;
+  autocomplete;
   fusionLayer;
   colourIndicators: FusionTableStyle[] = [
     {
@@ -76,11 +77,28 @@ export class AppComponent implements OnInit {
      console.log(e);
      });
      */
+
+    const input = document.getElementById('map_search');
+    const options = {
+      types: ['(cities)'],
+      componentRestrictions: {country: 'au'}
+    };
+
+    this.autocomplete = new google.maps.places.Autocomplete(input, options);
+    google.maps.event.addListener(this.autocomplete, 'place_changed', this.onAutocompleteSelected.bind(this));
+  }
+
+  /**
+   * Zoom to selected suburb
+   */
+  onAutocompleteSelected() {
+    this.map.panTo(this.autocomplete.getPlace().geometry.location);
+    this.map.setZoom(14);
   }
 
   /**
    * Get Fusion Table style layer config object
-   * @param filteringAttribute
+   * @param f'ASD'ingAttribute
    * @param params
    */
   getFusionTableStyle(filteringAttribute, params: FusionTableStyle) {
