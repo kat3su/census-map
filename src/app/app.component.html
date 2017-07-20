@@ -4,14 +4,14 @@
     <option>Display map by population</option>
   </select>
 </div>
-<div class="form-group" style="position: absolute; top: 1rem; left: 1rem; width: 50%">
+<div class="form-group" style="position: absolute; top: 1rem; left: 1rem; width: 200px">
   <!-- Search Bar -->
   <input class="form-input" placeholder="Suburb Search" style="margin-left: 11rem;"/>
   <!-- Colour Indicators -->
-  <ul>
+  <ul class="indicators">
     <li *ngFor="let colourIndicator of colourIndicators.reverse()">
       <span class="indicator-box" [style.background]="colourIndicator.color"></span>
-      <span>{{colourIndicator.display}}</span>
+      <span class="indicator-text">{{colourIndicator.display}}</span>
     </li>
   </ul>
 </div>
