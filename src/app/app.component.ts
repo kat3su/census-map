@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FusionTableStyle} from './fusion-table-style';
 import {PeopleFilter} from './filters/people';
 import {AgeFilter} from './filters/age';
-import {AbstractFilter} from "./filters/@abstract-filter";
+import {AbstractFilter} from './filters/@abstract-filter';
+import {IncomeFilter} from './filters/income';
 declare const google: any;
 
 @Component({
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
   filterList = [
     new PeopleFilter(),
     new AgeFilter(),
+    new IncomeFilter(),
   ];
   currentFilter: AbstractFilter = this.filterList[0];
 
