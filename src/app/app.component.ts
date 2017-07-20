@@ -1,50 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {FusionTableStyle} from './fusion-table-style';
+import {PeopleFilter} from './filters/people';
+import {AgeFilter} from './filters/age';
+import {AbstractFilter} from "./filters/@abstract-filter";
 declare const google: any;
-interface FusionTableStyle {
-  from: number;
-  to: number;
-  color: string;
-  display: string;
-}
-
-const peopleIndicator: FusionTableStyle[] = [
-  {
-    from: 0,
-    to: 500,
-    color: '#d1fcd0',
-    display: '0 - 500'
-  },
-  {
-    from: 501,
-    to: 2000,
-    color: '#7CFC00',
-    display: '501 - 2000'
-  },
-  {
-    from: 2001,
-    to: 5000,
-    color: '#ffe81c',
-    display: '2001 - 50000'
-  },
-  {
-    from: 5001,
-    to: 10000,
-    color: '#ffae02',
-    display: '50001 - 10000'
-  },
-  {
-    from: 10001,
-    to: 15000,
-    color: '#ff6749',
-    display: '10001 - 200000'
-  },
-  {
-    from: 15001,
-    to: null,
-    color: '#d23111',
-    display: '200001+'
-  },
-];
 
 @Component({
   selector: 'app-root',
@@ -55,11 +14,17 @@ export class AppComponent implements OnInit {
   map;
   autocomplete;
   fusionLayer;
-  colourIndicators = peopleIndicator;
+  filterList = [
+    new PeopleFilter(),
+    new AgeFilter(),
+  ];
+  currentFilter: AbstractFilter = this.filterList[0];
+
   /**
    * Initialisation
    */
   ngOnInit(): void {
+    console.log(this.filterList);
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -25, lng: 133},
       zoom: 4
@@ -81,11 +46,11 @@ export class AppComponent implements OnInit {
       map: this.map
     };
 
-    this.colourIndicators.forEach(colourIndicator => {
+    this.currentFilter.indicators.forEach(colourIndicator => {
       fusionLayerOptions.styles.push(this.getFusionTableStyle('people', colourIndicator));
     });
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
-    // this.fusionLayer.setOptions({})
+    this.updateMapWithFilter();
     // Can also do 2 layer
     /*
      google.maps.event.addListener(this.fusionLayer, 'click', function(e) {
@@ -113,7 +78,7 @@ export class AppComponent implements OnInit {
 
   /**
    * Get Fusion Table style layer config object
-   * @param f'ASD'ingAttribute
+   * @param filteringAttribute
    * @param params
    */
   getFusionTableStyle(filteringAttribute, params: FusionTableStyle) {
@@ -133,5 +98,30 @@ export class AppComponent implements OnInit {
         strokeWeight: 1,
       }
     };
+  }
+
+  /**
+   * Update Current Filter
+   *
+   * @param filter
+   */
+  updateCurrentFilter(event) {
+    this.currentFilter = this.filterList[event.target.value];
+    this.updateMapWithFilter();
+
+  }
+
+  /**
+   * Update Map
+   * @param filteringAttribute
+   */
+  updateMapWithFilter() {
+    const styles = [];
+    this.currentFilter.indicators.forEach(colourIndicator => {
+      styles.push(this.getFusionTableStyle(this.currentFilter.fusionTableColumn, colourIndicator));
+    });
+    this.fusionLayer.setOptions({
+      styles: styles
+    });
   }
 }
