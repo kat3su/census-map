@@ -16,33 +16,33 @@ export class AppComponent implements OnInit {
   fusionLayer;
   colourIndicators: FusionTableStyle[] = [
     {
-      from: 0,
-      to: 1000,
+      from: 501,
+      to: 2000,
       color: '#7CFC00',
       display: '0 - 1000'
     },
     {
-      from: 1001,
-      to: 10000,
-      color: '#FFFACD',
+      from: 2001,
+      to: 5000,
+      color: '#ffe81c',
       display: '1001 - 10000'
     },
     {
-      from: 10001,
-      to: 100000,
-      color: '#FFE4E1',
+      from: 5001,
+      to: 10000,
+      color: '#ff5f25',
       display: '10001 - 100000'
     },
     {
-      from: 100001,
-      to: 1000000,
-      color: '#D2691E',
+      from: 10001,
+      to: 20000,
+      color: '#d23111',
       display: '100001 - 1000000'
     },
     {
-      from: 1000001,
+      from: 20001,
       to: null,
-      color: '#FF4500',
+      color: '#ff0011',
       display: '1000001+'
     },
   ];
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     const fusionLayerOptions = {
       query: {
         select: 'geometry',
-        from: '1ertEwm-1bMBhpEwHhtNYT47HQ9k2ki_6sRa-UQ',
+        from: '1z0YGyCgbd59yqE8cMxElT2YRYtYgWfS1uB0StEyA',
         where: null
       },
       styles: [],
