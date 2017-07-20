@@ -6,6 +6,46 @@ interface FusionTableStyle {
   color: string;
   display: string;
 }
+
+const peopleIndicator: FusionTableStyle[] = [
+  {
+    from: 0,
+    to: 500,
+    color: '#d1fcd0',
+    display: '0 - 500'
+  },
+  {
+    from: 501,
+    to: 2000,
+    color: '#7CFC00',
+    display: '501 - 2000'
+  },
+  {
+    from: 2001,
+    to: 5000,
+    color: '#ffe81c',
+    display: '2001 - 50000'
+  },
+  {
+    from: 5001,
+    to: 10000,
+    color: '#ffae02',
+    display: '50001 - 10000'
+  },
+  {
+    from: 10001,
+    to: 15000,
+    color: '#ff6749',
+    display: '10001 - 200000'
+  },
+  {
+    from: 15001,
+    to: null,
+    color: '#d23111',
+    display: '200001+'
+  },
+];
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,38 +55,7 @@ export class AppComponent implements OnInit {
   map;
   autocomplete;
   fusionLayer;
-  colourIndicators: FusionTableStyle[] = [
-    {
-      from: 501,
-      to: 2000,
-      color: '#7CFC00',
-      display: '0 - 1000'
-    },
-    {
-      from: 2001,
-      to: 5000,
-      color: '#ffe81c',
-      display: '1001 - 10000'
-    },
-    {
-      from: 5001,
-      to: 10000,
-      color: '#ff5f25',
-      display: '10001 - 100000'
-    },
-    {
-      from: 10001,
-      to: 20000,
-      color: '#d23111',
-      display: '100001 - 1000000'
-    },
-    {
-      from: 20001,
-      to: null,
-      color: '#ff0011',
-      display: '1000001+'
-    },
-  ];
+  colourIndicators = peopleIndicator;
   /**
    * Initialisation
    */
@@ -60,9 +69,15 @@ export class AppComponent implements OnInit {
       query: {
         select: 'geometry',
         from: '1z0YGyCgbd59yqE8cMxElT2YRYtYgWfS1uB0StEyA',
-        where: null
+        where: 'people > 500'
       },
-      styles: [],
+      styles: [{
+        polygonOptions: {
+          fillOpacity: 0,
+          strokeOpacity: 0.7,
+          strokeWeight: 1,
+        }
+      }],
       map: this.map
     };
 
@@ -112,7 +127,10 @@ export class AppComponent implements OnInit {
     return {
       where: conditions.join(' AND '),
       polygonOptions: {
-        fillColor: params.color
+        fillColor: params.color,
+        fillOpacity: 0.3,
+        strokeOpacity: 0.7,
+        strokeWeight: 1,
       }
     };
   }
