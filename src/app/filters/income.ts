@@ -7,38 +7,32 @@ export class IncomeFilter extends AbstractFilter {
     {
       from: 0,
       to: 500,
-      color: '#d1fcd0',
-      display: '0 - 300'
+      color: '#d1fcd0'
     },
     {
       from: 501,
       to: 1000,
-      color: '#7CFC00',
-      display: '301 - 500'
+      color: '#7CFC00'
     },
     {
       from: 1001,
       to: 1300,
-      color: '#ffe81c',
-      display: '501 - 800'
+      color: '#ffe81c'
     },
     {
       from: 1301,
       to: 1500,
-      color: '#ffae02',
-      display: '801 - 1000'
+      color: '#ffae02'
     },
     {
       from: 1501,
       to: 2000,
-      color: '#ff6749',
-      display: '1001 - 1500'
+      color: '#ff6749'
     },
     {
       from: 2001,
       to: null,
-      color: '#d23111',
-      display: '1501+'
+      color: '#d23111'
     }
   ];
 
