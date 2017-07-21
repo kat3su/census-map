@@ -2,8 +2,7 @@
 <div class="form-group" style="position: absolute; top: 1rem; right: 1rem; width: 30%;">
   <select class="form-select" placeholder="Display map by population" (change)="updateCurrentFilter($event)">
     <option *ngFor="let filter of filterList; let i = index" value="{{i}}">
-      {{filter.from ? filter.from : 'From'}}
-      {{filter.to ? '- '+filter.to : '+'}}
+      {{filter.display}}
     </option>
   </select>
 </div>
@@ -14,7 +13,10 @@
   <ul class="indicators">
     <li *ngFor="let colourIndicator of currentFilter.indicators.reverse()">
       <span class="indicator-box" [style.background]="colourIndicator.color"></span>
-      <span class="indicator-text">{{colourIndicator.display}}</span>
+      <span class="indicator-text">
+        {{colourIndicator.from ? colourIndicator.from : 'From'}}
+        {{colourIndicator.to ? '- '+colourIndicator.to : '+'}}
+      </span>
     </li>
   </ul>
 </div>
