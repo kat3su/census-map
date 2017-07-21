@@ -1,7 +1,10 @@
 <!-- Select -->
 <div class="form-group" style="position: absolute; top: 1rem; right: 1rem; width: 30%;">
   <select class="form-select" placeholder="Display map by population" (change)="updateCurrentFilter($event)">
-    <option *ngFor="let filter of filterList; let i = index" value="{{i}}">{{filter.display}}</option>
+    <option *ngFor="let filter of filterList; let i = index" value="{{i}}">
+      {{filter.from ? filter.from : 'From'}}
+      {{filter.to ? '- '+filter.to : '+'}}
+    </option>
   </select>
 </div>
 <div class="form-group" style="position: absolute; top: 1rem; left: 1rem; width: 200px">
