@@ -4,6 +4,7 @@ import {PeopleFilter} from './filters/people';
 import {AgeFilter} from './filters/age';
 import {AbstractFilter} from './filters/@abstract-filter';
 import {IncomeFilter} from './filters/income';
+import {DwellingFilter} from "./filters/dwellings";
 declare const google: any;
 
 @Component({
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     new PeopleFilter(),
     new AgeFilter(),
     new IncomeFilter(),
+    new DwellingFilter(),
   ];
   currentFilter: AbstractFilter = this.filterList[0];
 
