@@ -22,13 +22,20 @@ export class AppComponent implements OnInit {
     new IncomeFilter(),
     new DwellingFilter(),
   ];
+  indicatorColorList = [
+    '#d1fcd0',
+    '#7CFC00',
+    '#ffe81c',
+    '#ffae02',
+    '#ff6749',
+    '#d23111'
+  ]
   currentFilter: AbstractFilter = this.filterList[0];
 
   /**
    * Initialisation
    */
   ngOnInit(): void {
-    console.log(this.filterList);
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -25, lng: 133},
       zoom: 4
@@ -49,10 +56,6 @@ export class AppComponent implements OnInit {
       }],
       map: this.map
     };
-
-    this.currentFilter.indicators.forEach(colourIndicator => {
-      fusionLayerOptions.styles.push(this.getFusionTableStyle('people', colourIndicator));
-    });
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
     this.updateMapWithFilter();
     // Can also do 2 layer
@@ -84,8 +87,9 @@ export class AppComponent implements OnInit {
    * Get Fusion Table style layer config object
    * @param filteringAttribute
    * @param params
+   * @param colorIndex
    */
-  getFusionTableStyle(filteringAttribute, params: FusionTableStyle) {
+  getFusionTableStyle(filteringAttribute, params: FusionTableStyle, colorIndex: number) {
     const conditions = [];
     if (params.from) {
       conditions.push(`${filteringAttribute} >= ${params.from}`);
@@ -96,7 +100,7 @@ export class AppComponent implements OnInit {
     return {
       where: conditions.join(' AND '),
       polygonOptions: {
-        fillColor: params.color,
+        fillColor: this.indicatorColorList[colorIndex],
         fillOpacity: 0.3,
         strokeOpacity: 0.7,
         strokeWeight: 1,
@@ -121,8 +125,8 @@ export class AppComponent implements OnInit {
    */
   updateMapWithFilter() {
     const styles = [];
-    this.currentFilter.indicators.forEach(colourIndicator => {
-      styles.push(this.getFusionTableStyle(this.currentFilter.fusionTableColumn, colourIndicator));
+    this.currentFilter.indicators.forEach((colourIndicator, colorIndex) => {
+      styles.push(this.getFusionTableStyle(this.currentFilter.fusionTableColumn, colourIndicator, colorIndex));
     });
     this.fusionLayer.setOptions({
       styles: styles

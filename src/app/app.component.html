@@ -11,8 +11,8 @@
   <input class="form-input" placeholder="Suburb Search" style="margin-left: 11rem;" id="map_search" />
   <!-- Colour Indicators -->
   <ul class="indicators">
-    <li *ngFor="let colourIndicator of currentFilter.indicators.reverse()">
-      <span class="indicator-box" [style.background]="colourIndicator.color"></span>
+    <li *ngFor="let colourIndicator of currentFilter.indicators; let i = index">
+      <span class="indicator-box" [style.background]="this.indicatorColorList[i]"></span>
       <span class="indicator-text">
         {{colourIndicator.from ? colourIndicator.from : 'From'}}
         {{colourIndicator.to ? '- '+colourIndicator.to : '+'}}
