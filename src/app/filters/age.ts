@@ -8,32 +8,27 @@ export class AgeFilter extends AbstractFilter {
     {
       from: 0,
       to: 20,
-      color: '#d1fcd0',
-      display: '0 - 20'
+      color: '#d1fcd0'
     },
     {
       from: 21,
       to: 30,
-      color: '#7CFC00',
-      display: '21 - 30'
+      color: '#7CFC00'
     },
     {
       from: 31,
       to: 40,
-      color: '#ffe81c',
-      display: '31 - 40'
+      color: '#ffe81c'
     },
     {
       from: 41,
       to: 50,
-      color: '#ffae02',
-      display: '41 - 50'
+      color: '#ffae02'
     },
     {
       from: 51,
       to: null,
-      color: '#ff6749',
-      display: '51 - 60'
+      color: '#ff6749'
     },
   ];
 }
