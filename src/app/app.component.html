@@ -1,3 +1,21 @@
-<h1>
-  {{title}}
-</h1>
+<!-- Select -->
+<div class="form-group" style="position: absolute; top: 1rem; right: 1rem; width: 30%;">
+  <select class="form-select" placeholder="Display map by population" (change)="updateCurrentFilter($event)">
+    <option *ngFor="let filter of filterList; let i = index" value="{{i}}">{{filter.display}}</option>
+  </select>
+</div>
+<div class="form-group" style="position: absolute; top: 1rem; left: 1rem; width: 200px">
+  <!-- Search Bar -->
+  <input class="form-input" placeholder="Suburb Search" style="margin-left: 11rem;" id="map_search" />
+  <!-- Colour Indicators -->
+  <ul class="indicators">
+    <li *ngFor="let colourIndicator of currentFilter.indicators.reverse()">
+      <span class="indicator-box" [style.background]="colourIndicator.color"></span>
+      <span class="indicator-text">{{colourIndicator.display}}</span>
+    </li>
+  </ul>
+</div>
+
+
+<!-- Map -->
+<div id="map"></div>

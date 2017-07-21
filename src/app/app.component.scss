@@ -1,0 +1,45 @@
+#map {
+  height: 100%;
+  z-index: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 5rem 0 0;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+  li span {
+    margin: 0;
+    padding: 0
+  }
+}
+
+
+
+.form-group {
+  z-index: 10;
+}
+.indicators {
+  width: 100%;
+  background: #fff;
+  padding: 1rem;
+  border-radius: .2rem;
+  box-shadow: 0 0 1px #aaa;
+
+  li {
+    margin-bottom: .5rem;
+
+    .indicator-box, .indicator-text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .indicator-box {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+}
