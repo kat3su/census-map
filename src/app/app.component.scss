@@ -1,3 +1,15 @@
+@media screen and (max-width: 480px) {
+  #map_search {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .indicators {
+    display: none;
+  }
+}
+
 #map {
   height: 100%;
   z-index: 0;
