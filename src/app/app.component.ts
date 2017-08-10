@@ -4,7 +4,7 @@ import {PeopleFilter} from './filters/people';
 import {AgeFilter} from './filters/age';
 import {AbstractFilter} from './filters/@abstract-filter';
 import {IncomeFilter} from './filters/income';
-import {DwellingFilter} from "./filters/dwellings";
+import {DwellingFilter} from './filters/dwellings';
 declare const google: any;
 
 @Component({
@@ -13,10 +13,12 @@ declare const google: any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  map;
-  autocomplete;
-  fusionLayer;
-  filterList = [
+  private fusionTableId = '1z0YGyCgbd59yqE8cMxElT2YRYtYgWfS1uB0StEyA';
+  private map;
+  private autocomplete;
+  private fusionLayer;
+  private highlightFusionLayer;
+  public filterList = [
     new PeopleFilter(),
     new AgeFilter(),
     new IncomeFilter(),
@@ -29,23 +31,50 @@ export class AppComponent implements OnInit {
     '#ffae02',
     '#ff6749',
     '#d23111'
-  ]
+  ];
   currentFilter: AbstractFilter = this.filterList[0];
 
   /**
    * Initialisation
    */
   ngOnInit(): void {
+    this.setupMap();
+    this.setupFusionLayer();
+    this.setupSearchInput();
+  }
+
+  /**
+   * Setup Google Map
+   */
+  private setupMap() {
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: -25, lng: 133},
       zoom: 4
     });
+  }
 
+  /**
+   * Setup Suburb Search Input
+   */
+  private setupSearchInput() {
+    const input = document.getElementById('map_search');
+    const options = {
+      types: ['(cities)'],
+      componentRestrictions: {country: 'au'}
+    };
+
+    this.autocomplete = new google.maps.places.Autocomplete(input, options);
+    google.maps.event.addListener(this.autocomplete, 'place_changed', this.onAutocompleteSelected.bind(this));
+  }
+
+  /**
+   * Setup Fusion Table
+   */
+  private setupFusionLayer() {
     const fusionLayerOptions = {
       query: {
         select: 'geometry',
-        from: '1z0YGyCgbd59yqE8cMxElT2YRYtYgWfS1uB0StEyA',
-        where: 'people > 500'
+        from: this.fusionTableId
       },
       styles: [{
         polygonOptions: {
@@ -58,22 +87,29 @@ export class AppComponent implements OnInit {
     };
     this.fusionLayer = new google.maps.FusionTablesLayer(fusionLayerOptions);
     this.updateMapWithFilter();
-    // Can also do 2 layer
-    /*
-     google.maps.event.addListener(this.fusionLayer, 'click', function(e) {
-     console.log(e);
-     });
-     */
-
-    const input = document.getElementById('map_search');
-    const options = {
-      types: ['(cities)'],
-      componentRestrictions: {country: 'au'}
-    };
-
-    this.autocomplete = new google.maps.places.Autocomplete(input, options);
-    google.maps.event.addListener(this.autocomplete, 'place_changed', this.onAutocompleteSelected.bind(this));
+    this.setupFusionTableClickListener();
   }
+
+  /**
+   * Fusion Table Map On Click Listener
+   */
+  private setupFusionTableClickListener() {
+    const self = this;
+    google.maps.event.addListener(this.fusionLayer, 'click', function(e) {
+      console.log(`state = '${e.row.state.value}' AND suburb = '${e.row.suburb.value}'`);
+
+      self.fusionLayer.setOptions({
+        styles: [{
+          where: `people < 5000`,
+          polygonOptions: {
+            fillColor: '#000000',
+            fillOpacity: 0.5,
+          }
+        }]
+      });
+    });
+  }
+
 
   /**
    * Zoom to selected suburb
